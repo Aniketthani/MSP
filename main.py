@@ -56,7 +56,7 @@ if sub_btn:
     #name of uploaded file
     file_name=None
     try:
-        file_name=file.filename
+        file_name=file.name
     except:
         pass
     if file_name:
@@ -74,7 +74,13 @@ if sub_btn:
         df["Predicted"]=y_pred["Predicted"]
         df.drop(columns=["Sentiment"],inplace=True,axis=1)
         df.to_csv("outputs/"+file_name,index=False)
-
+        csv=df.to_csv().encode('utf-8')
+        st.download_button(
+            label="Download Results",
+            data=csv,
+            file_name='results.csv',
+            mime='text/csv',
+ )
         st.success("Output file is saved in outputs folder")
 
 
@@ -104,3 +110,4 @@ if predict_btn:
 
 if clear_btn:
     result_image=None
+    
